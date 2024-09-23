@@ -1,34 +1,42 @@
 const { Schema, model } = require('mongoose');
-const thoughtSchema = require('./Thought');
+const userSchema = require('./User');
 const reactionSchema = require('./Reaction');
+const formatDate = require('../utils/formatDate');
 
 // Schema to create User model
-const userSchema = new Schema(
-  {
-    thoughtText: {
-      type: String,
-      required: true,
-      min_length: 1,
-      max_length: 280,
+const thoughtSchema = new Schema(
+    {
+        thoughtText: {
+            type: String,
+            required: true,
+            min_length: 1,
+            max_length: 280,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: formatDate(Date),
+        },
+        username: {
+            userSchema,
+            type: String,
+            required: true,
+        },
+        reactions: [reactionSchema],
     },
-    createdAt: {
-      type: String,
-    },
-    thoughts: [thoughtSchema],
-    friends: [userSchema],
-  },
-  {
-    toJSON: {
-        virtuals: true,
-      },
-  }
+    {
+        toJSON: {
+            getters: true,
+        },
+        id: false,
+    }
 );
 
-// Create a virtual property `friendCount` that retrieves the length of the user's friends array field on query.
-userSchema.virtual('friendCount').get(function () {
-    return this.friends.length;
+// Create a virtual property `reactionCount` that retrieves the length of the thought's reactions array field on query.
+thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
   });
 
-const User = model('user', userSchema);
+const Thought = model('thought', thoughtSchema);
 
-module.exports = User;
+module.exports = Thought;
