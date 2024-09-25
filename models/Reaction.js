@@ -7,8 +7,8 @@ const formatDate = require('../utils/formatDate');
 const reactionSchema = new Schema(
     {
         reactionId: {
-            type: mongoose.Types.ObjectId(),
-            default:
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(), //mongoose.ObjectId OR mongoose.Types.ObjectId()
         },
         reactionBody: {
             type: String,
