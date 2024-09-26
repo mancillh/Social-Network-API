@@ -1,9 +1,39 @@
 const { Schema, model } = require('mongoose');
 const userSchema = require('./User');
-const reactionSchema = require('./Reaction');
 const formatDate = require('../utils/formatDate');
 
-// Schema to create User model
+// reactionSchema is child/subdocument
+const reactionSchema = new Schema(
+    {
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(), //mongoose.ObjectId OR mongoose.Types.ObjectId()
+        },
+        reactionBody: {
+            type: String,
+            required: true,
+            max_length: 280,
+        },
+        username: {
+            userSchema,
+            type: String,
+            required: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: formatDate(Date),
+        },
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
+        id: false,
+    }
+);
+
+// Schema to create Thought model; thoughtSchema is the parent/document
 const thoughtSchema = new Schema(
     {
         thoughtText: {
