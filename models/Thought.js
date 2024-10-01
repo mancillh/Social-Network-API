@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const userSchema = require('./User');
-const formatDate = require('../utils/formatDate');
 
 // reactionSchema is child/subdocument
 const reactionSchema = new Schema(
@@ -21,8 +20,7 @@ const reactionSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now,
-            get: formatDate(Date),
+            default: Date.now
         },
     },
     {
@@ -33,7 +31,7 @@ const reactionSchema = new Schema(
     }
 );
 
-// Schema to create Thought model; thoughtSchema is the parent/document
+// create thought Schema; thoughtSchema is the parent/document
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -44,8 +42,7 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now,
-            get: formatDate(Date),
+            default: Date.now
         },
         username: {
             userSchema,
@@ -67,6 +64,8 @@ thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
   });
 
-const Thought = model('thought', thoughtSchema);
+// register thought Schema by creating a model
+const Thought = model('Thought', thoughtSchema);
 
+// export Thought model
 module.exports = Thought;
