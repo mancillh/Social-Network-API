@@ -24,7 +24,6 @@ module.exports = {
         try {
             const user = await User.findOne({ _id: req.params.userId })
                 .select('-__v')
-                .populate('Thoughts')
 
             if (!user) {
                 return res.status(404).json({ message: 'No user with that ID' })
