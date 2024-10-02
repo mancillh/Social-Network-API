@@ -79,5 +79,41 @@ module.exports = {
             console.log(err);
             res.status(500).json(err);
         }
+    },
+    // Add Friend
+    async addFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: req.params.friendId } },
+                { new:true }
+            )
+    
+            if (!user) {
+                return res.status(404).json({ message: 'No such user exists' });
+            }
+            
+            res.status(200).json({ message: 'Congrats! You made a new friend!' });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    // Delete Friend
+    async deleteFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId } },
+                { new:true }
+            )
+    
+            if (!user) {
+                return res.status(404).json({ message: 'No such user exists' });
+            }
+            
+            res.status(200).json({ message: 'You are no longer friends' });
+        } catch (err) {
+            res.status(500).json(err);
+        }
     }
 };
