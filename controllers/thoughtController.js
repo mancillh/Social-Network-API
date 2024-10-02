@@ -7,7 +7,7 @@ module.exports = {
     // Get all thoughts
     async getAllThoughts (req, res) {
         try {
-            const thoughts = await Thought.find({}).populate('reaction');
+            const thoughts = await Thought.find({});
 
             const thoughtObj = {
                 thoughts,
