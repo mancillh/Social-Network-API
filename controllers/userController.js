@@ -1,5 +1,3 @@
-const { ObjectId } = require('mongoose').Types;
-
 //import User model
 const { User } = require('../models');
 

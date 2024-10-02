@@ -1,5 +1,3 @@
-const { ObjectId } = require('mongoose').Types;
-
 // import Thought model
 const { Thought, User } = require('../models');
 
@@ -95,8 +93,17 @@ module.exports = {
     // Create a new reaction
     async createReaction(req, res) {
         try {
-            const reaction = await Thought.create(req.body);
-            res.json(thought);
+            const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body } },
+                { new:true }
+            )
+
+            if (!thought) {
+                return res.status(404).json({ message: 'No such thought exists' });
+            }
+
+            res.status(200).json({ message: 'You have reacted to a thought' });
         } catch (err) {
             res.status(500).json(err);
         }
@@ -105,15 +112,15 @@ module.exports = {
         try {
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: { responseId: req.params.responseId } } },
-                { runValidators: true, new: true }
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
+                { new: true }
             )
 
             if (!thought) {
                 return res.status(404).json({ message: 'No thought with this ID' });
             }
 
-            res.json(thought);
+            res.json({ message: "You're reaction has been deleted" });
         } catch (err) {
             res.status(500).json(err);
         }
