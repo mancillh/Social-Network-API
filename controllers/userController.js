@@ -49,13 +49,17 @@ module.exports = {
     // Update a user
     async updateUser(req, res) {
         try {
-            const user = await User.findOneAndUpdate({ _id: req.params.studentId });
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { username: req.body.username, email: req.body.email },
+                { new: true }
+            );
 
             if (!user) {
                 return res.status(404).json({ message: 'No such user exists' });
             }
 
-            res.json({ message: 'User successfully updated' });
+            res.status(200).json({ message: 'User successfully updated' });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
