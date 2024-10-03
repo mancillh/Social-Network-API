@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 
-
 // create thought Schema; thoughtSchema is the parent/document
 const thoughtSchema = new Schema(
     {
@@ -13,7 +12,8 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
+            get: formatDate,
         },
         username: {
             type: String,
@@ -35,6 +35,9 @@ thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
   });
 
+function formatDate(createdAt) {
+    return (createdAt.toLocaleString());
+  };
 
 // register thought Schema by creating a model
 const Thought = model('Thought', thoughtSchema);
