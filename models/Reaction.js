@@ -1,6 +1,5 @@
 const { Schema, Types } = require('mongoose');
 
-// reactionSchema is child/subdocument
 const reactionSchema = new Schema(
     {
         reactionId: {
