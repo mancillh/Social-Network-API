@@ -1,7 +1,7 @@
 # Social Network API
   
   ## Description
-  This Social Network API was made with Node, Express, and Mongoose. It is a back-end application only.
+  This Social Network API was made with Node, Express, and Mongoose. It is a back-end application only. A link to a walkthrough video showing the functionality of the app has been provided in the Usage section.
 
   ## Table of Contents 
   * [Description](#description)
@@ -15,11 +15,14 @@
   * [Questions](#questions)
   
   ## Installation
-  1.) Clone the repo found at: https://github.com/mancillh/Social-Network-API. 2.) Run "npm i" in the terminal to install dependencies. 
+  1.) Clone the repo found at: https://github.com/mancillh/Social-Network-API. 
+  2.) Run "npm i" in the terminal to install dependencies. 
  
   ## Usage
   1.) Run "npm start" and open the application in a program like Insomnia or Postman. 
   2.) All test routes are listed in the comments inside routes > api > thoughtRoutes.js or routes > api > userRoutes.js.
+
+  The WalkThrough video may be accessed at the following URL: https://www.loom.com/share/39b17a2b38d846c9bb389417ec71dd55?sid=83e831f0-645b-47ee-8793-a41118340bc8
   
   EXAMPLES:
   You may go to: "/api/users" and GET all users or POST to create a new user:
